@@ -1,0 +1,429 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1.1 `index.html` を作成し、DOM 構造・ARIA ロール・タブナビゲーション骨格を定義する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219514
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103227772
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103377527
+      }
+    ],
+    "1.2 `hiragana.js` に `HIRAGANA_DATA` 定数（46エントリ）と `ALL_CHARS` 配列を定義する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219624
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103228355
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103378077
+      }
+    ],
+    "2.1 `hiragana.js` に `SpeechSynthesizer` モジュール（IIFE）を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219689
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103883622
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104526235
+      }
+    ],
+    "3. チェックポイント — SpeechSynthesizer の動作確認": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219751
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104539461
+      }
+    ],
+    "4.1 `hiragana.js` に `GojuonTableView` モジュール（IIFE）を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219784
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104543629
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104926805
+      }
+    ],
+    "5.1 `hiragana.js`（または `index.html` インラインスクリプト）にタブ切り替えロジックを実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219852
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104544056
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104927378
+      }
+    ],
+    "6.1 `quiz.js` に `QuizLogic` モジュール（IIFE）を実装する — `getDifficultyConfig`": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219885
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103384715
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103873279
+      }
+    ],
+    "6.2 `QuizLogic.createSession(difficulty, rng?)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219909
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103884115
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104526817
+      }
+    ],
+    "6.4 `QuizLogic.generateQuestion(correctChar, allChars, rng?)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219965
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103884685
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104527624
+      }
+    ],
+    "6.6 `QuizLogic.evaluateAnswer(question, selectedChar)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103219991
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103885241
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104528169
+      }
+    ],
+    "6.8 `QuizLogic.calcResultTier(correct, total)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220018
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103885857
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104528677
+      }
+    ],
+    "7. チェックポイント — QuizLogic の動作確認": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220076
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104539789
+      }
+    ],
+    "8.1 `quiz.js` に `QuizView.showDifficultyScreen()` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220102
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104544500
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104925966
+      }
+    ],
+    "8.2 `QuizView.renderQuestion(question, index, total, score)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220130
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104931913
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105121826
+      }
+    ],
+    "8.4 `QuizView.showFeedback(result)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220164
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104932477
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105122374
+      }
+    ],
+    "9.1 `AppState.quiz.interactionLocked` フラグを `quiz.js` に追加し、Choice_Button クリックハンドラに組み込む": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220212
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104933542
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105123172
+      }
+    ],
+    "10.1 `QuizView.showResultScreen(session)` を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220238
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104933952
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105120938
+      }
+    ],
+    "11. チェックポイント — クイズフロー全体の動作確認": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220263
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105127951
+      }
+    ],
+    "12.1 レスポンシブレイアウト・流体タイポグラフィ・タップターゲットサイズを実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220317
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105128743
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105556585
+      }
+    ],
+    "12.2 アニメーション・ダークモード・`prefers-reduced-motion` 対応を実装する": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220341
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105129372
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105557297
+      }
+    ],
+    "13.1 `index.html` で各モジュールを初期化し、アプリ起動フローを完成させる": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220368
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105131549
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105556098
+      }
+    ],
+    "14. 最終チェックポイント — すべてのテストがパスすることを確認": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103220428
+      },
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105596433
+      }
+    ],
+    "1. プロジェクト構造のセットアップとデータ定義": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791103378111
+      }
+    ],
+    "2. SpeechSynthesizer モジュールの実装": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104526323
+      }
+    ],
+    "6. QuizLogic モジュールの実装（純粋関数）": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104528714
+      }
+    ],
+    "4. GojuonTableView モジュールの実装（五十音表 UI）": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104926848
+      }
+    ],
+    "5. タブナビゲーションの実装": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791104927411
+      }
+    ],
+    "10. 結果画面の実装": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105121022
+      }
+    ],
+    "8. QuizView モジュールの実装（クイズ UI）": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105122417
+      }
+    ],
+    "9. インタラクションロックと連打防止の実装": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105123201
+      }
+    ],
+    "13. コンポーネントの結合と最終統合": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105556268
+      }
+    ],
+    "12. `style.css` の実装（レイアウト・アニメーション・アクセシビリティ）": [
+      {
+        "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
+        "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
+        "timestamp": 1791105557350
+      }
+    ]
+  }
+}
