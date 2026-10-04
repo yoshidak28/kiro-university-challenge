@@ -1,0 +1,715 @@
+/* ==========================================================================
+   ひらがな れんしゅう — style.css
+   Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 1.4, 1.5, 1.7
+   ========================================================================== */
+
+/* ── カスタムプロパティ（デザイントークン） ── */
+:root {
+  /* カラーパレット */
+  --color-primary:    #ff7043;   /* オレンジ（プライマリ） */
+  --color-accent-1:   #42a5f5;   /* 青 */
+  --color-accent-2:   #66bb6a;   /* 緑 */
+  --color-bg:         #fffde7;   /* 薄黄（背景） */
+  --color-surface:    #ffffff;   /* 白（カード面） */
+  --color-correct:    #66bb6a;   /* 正解（緑） */
+  --color-wrong:      #ef5350;   /* 不正解（赤） */
+  --color-text:       #4e342e;   /* テキスト（ブラウン） */
+  --color-text-muted: #8d6e63;   /* サブテキスト */
+  --color-border:     #ffe0b2;   /* ボーダー */
+  --color-shadow:     rgba(255, 112, 67, 0.25);
+
+  /* タイポグラフィ */
+  --font-family: 'M PLUS Rounded 1c', sans-serif;
+
+  /* スペーシング */
+  --radius-sm:  8px;
+  --radius-md:  16px;
+  --radius-lg:  24px;
+
+  /* トランジション */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+}
+
+/* ==========================================================================
+   リセット & ベーススタイル
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* 流体ルートフォントサイズ: 320px で 14px、1200px で 18px（Requirements 10.2） */
+  font-size: clamp(14px, 1.2vw + 10px, 18px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden; /* 横スクロール防止（Requirements 10.1） */
+}
+
+/* ボタンのデフォルトリセット */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  /* iOS ダブルタップズーム防止（Requirements 10.3） */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  /* フォーカス可視化 */
+  outline-offset: 3px;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--color-accent-1);
+}
+
+/* ==========================================================================
+   アプリヘッダー
+   ========================================================================== */
+.app-header {
+  background: var(--color-primary);
+  padding: 0.75rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.app-title {
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.05em;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================================================
+   タブナビゲーション
+   ========================================================================== */
+.tab-nav {
+  background: var(--color-surface);
+  border-bottom: 3px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab-list {
+  display: flex;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tab-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  padding: 0.75rem 0.5rem;
+  font-size: clamp(0.95rem, 3vw, 1.1rem);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: transparent;
+  border-bottom: 4px solid transparent;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  /* タップターゲット確保（Requirements 10.3） */
+  min-height: 48px;
+}
+
+.tab-btn:hover {
+  background: #fff8f5;
+  color: var(--color-primary);
+}
+
+.tab-btn--active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background: #fff8f5;
+}
+
+.tab-icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.tab-label {
+  line-height: 1;
+}
+
+/* ==========================================================================
+   メインコンテンツ
+   ========================================================================== */
+.main-content {
+  flex: 1;
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem 0.75rem;
+}
+
+/* タブパネルの表示制御 */
+.view {
+  display: block;
+}
+
+.view--active {
+  display: block;
+}
+
+.view--hidden {
+  display: none;
+}
+
+/* ==========================================================================
+   フッター
+   ========================================================================== */
+.app-footer {
+  background: var(--color-surface);
+  border-top: 2px solid var(--color-border);
+  padding: 0.6rem 1rem;
+  text-align: center;
+}
+
+.app-footer__text {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   五十音表
+   ========================================================================== */
+.gojuon-table-container {
+  width: 100%;
+  overflow-x: auto; /* 小画面でテーブルが溢れた場合の水平スクロール */
+  -webkit-overflow-scrolling: touch;
+  border-radius: var(--radius-md);
+}
+
+.gojuon-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* テーブルヘッダー */
+.gojuon-corner {
+  width: clamp(28px, 6vw, 44px);
+}
+
+.gojuon-col-header,
+.gojuon-row-header {
+  font-size: clamp(0.65rem, 2vw, 0.85rem);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: 0.3rem 0.1rem;
+  white-space: nowrap;
+}
+
+.gojuon-col-header {
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-border);
+  position: sticky;
+  top: 51px; /* タブナビ高さ分オフセット */
+  z-index: 10;
+}
+
+.gojuon-row-header {
+  background: var(--color-surface);
+  border-right: 2px solid var(--color-border);
+}
+
+.gojuon-row-header--empty {
+  background: transparent;
+  border-right-color: transparent;
+}
+
+/* セル */
+.hiragana-cell {
+  padding: 3px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.hiragana-cell--empty {
+  background: transparent;
+}
+
+/* ん の行 */
+.gojuon-row--nn .hiragana-cell--empty {
+  background: transparent;
+}
+
+/* ひらがなカードボタン（Requirements 1.4, 1.5） */
+.hiragana-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* 最小タップターゲット（Requirements 1.5, 10.3） */
+  min-width: 44px;
+  min-height: 44px;
+  font-size: clamp(2rem, 7vw, 2.8rem);  /* 子ども向けの大きなフォントサイズ（Requirements 1.4） */
+  font-weight: 700;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+  /* iOS ダブルタップズーム防止（Requirements 10.3） */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.hiragana-card:hover {
+  background: #fff3e0;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 10px var(--color-shadow);
+  transform: translateY(-2px);
+}
+
+.hiragana-card:active {
+  transform: scale(0.94);
+}
+
+/* アクティブカードのバウンスアニメーション（Requirements 1.7, 12.2） */
+.hiragana-card.is-active {
+  animation: cardBounce 0.45s ease;
+}
+
+/* ==========================================================================
+   クイズ — フェーズ表示制御
+   ========================================================================== */
+.quiz-phase {
+  display: block;
+}
+
+.quiz-phase--hidden {
+  display: none;
+}
+
+/* ==========================================================================
+   難易度選択画面
+   ========================================================================== */
+.difficulty-title {
+  font-size: clamp(1.3rem, 4.5vw, 1.8rem);
+  font-weight: 800;
+  text-align: center;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.difficulty-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.difficulty-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3em;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+  min-height: 72px;
+  width: 100%;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.difficulty-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px var(--color-shadow);
+  border-color: var(--color-primary);
+  background: #fff8f5;
+}
+
+.difficulty-btn:active {
+  transform: scale(0.97);
+}
+
+/* かんたん → オレンジ、ふつう → 青、むずかしい → 紫っぽいアクセント */
+.difficulty-btn:nth-child(1) { border-color: #ffb300; }
+.difficulty-btn:nth-child(1):hover { border-color: #ffb300; box-shadow: 0 6px 16px rgba(255,179,0,0.3); }
+.difficulty-btn:nth-child(2) { border-color: var(--color-accent-1); }
+.difficulty-btn:nth-child(2):hover { border-color: var(--color-accent-1); box-shadow: 0 6px 16px rgba(66,165,245,0.3); }
+.difficulty-btn:nth-child(3) { border-color: #ab47bc; }
+.difficulty-btn:nth-child(3):hover { border-color: #ab47bc; box-shadow: 0 6px 16px rgba(171,71,188,0.3); }
+
+.difficulty-btn__label {
+  font-size: clamp(1.3rem, 4vw, 1.6rem);
+  color: var(--color-text);
+}
+
+.difficulty-btn__desc {
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  color: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   クイズ進行中 — 進捗エリア
+   ========================================================================== */
+.progress-container {
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 14px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-primary), #ff8a65);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.progress-meta__counter,
+.progress-meta__score {
+  min-width: 60px;
+}
+
+/* ==========================================================================
+   クイズ進行中 — 問題エリア
+   ========================================================================== */
+.question-area {
+  text-align: center;
+  padding: 0.75rem 0;
+}
+
+.question-text {
+  font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 0.3rem;
+}
+
+.question-hint {
+  font-size: clamp(2rem, 7vw, 3rem);
+  line-height: 1.2;
+  cursor: default;
+  /* アニメーション（Requirements 1.7） */
+  animation: pulseIcon 2s ease infinite;
+}
+
+/* ==========================================================================
+   クイズ進行中 — 選択肢ボタン（2×2グリッド）
+   ========================================================================== */
+.choices-area {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(0.5rem, 2vw, 1rem);
+  max-width: 520px;
+  margin: 0.75rem auto;
+}
+
+.choice-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1;
+  /* 最小タップターゲット（Requirements 1.5） */
+  min-width: 44px;
+  min-height: 44px;
+  font-size: clamp(2.4rem, 9vw, 3.5rem);
+  font-weight: 800;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.choice-btn:not(:disabled):hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  border-color: var(--color-accent-1);
+  background: #e3f2fd;
+}
+
+.choice-btn:not(:disabled):active {
+  transform: scale(0.95);
+}
+
+/* 正解スタイル（Requirements 6.3） */
+.choice-btn--correct {
+  background: #e8f5e9 !important;
+  border-color: var(--color-correct) !important;
+  color: #2e7d32 !important;
+  box-shadow: 0 4px 14px rgba(102, 187, 106, 0.4) !important;
+  animation: correctPulse 0.5s ease;
+}
+
+/* 不正解スタイル（Requirements 6.4） */
+.choice-btn--wrong {
+  background: #ffebee !important;
+  border-color: var(--color-wrong) !important;
+  color: #c62828 !important;
+  box-shadow: 0 4px 14px rgba(239, 83, 80, 0.35) !important;
+  animation: wrongShake 0.4s ease;
+}
+
+/* 無効状態（全ボタン：フィードバック後） */
+.choice-btn:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   フィードバックエリア
+   ========================================================================== */
+.feedback-area {
+  min-height: 2.5rem;
+  text-align: center;
+  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  font-weight: 800;
+  color: var(--color-text);
+  padding: 0.5rem 0.5rem 0;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   結果画面
+   ========================================================================== */
+#quiz-result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.5rem 1rem 2rem;
+  text-align: center;
+  animation: fadeInUp 0.4s ease;
+}
+
+.result-stars {
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  line-height: 1.1;
+  animation: starPop 0.5s ease;
+}
+
+.result-score {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.result-message {
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text);
+  max-width: 320px;
+}
+
+.retry-btn {
+  margin-top: 0.5rem;
+  padding: 0.85rem 2rem;
+  font-size: clamp(1rem, 3.5vw, 1.2rem);
+  font-weight: 800;
+  color: #fff;
+  background: var(--color-primary);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 12px var(--color-shadow);
+  min-height: 52px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.retry-btn:hover {
+  background: #f4511e;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px var(--color-shadow);
+}
+
+.retry-btn:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   アニメーション定義（Requirements 1.7, 12.2）
+   ========================================================================== */
+
+/* ひらがなカードのバウンス（is-active クラスで発火） */
+@keyframes cardBounce {
+  0%   { transform: scale(1); }
+  30%  { transform: scale(0.88); }
+  55%  { transform: scale(1.18); }
+  75%  { transform: scale(0.96); }
+  90%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+
+/* 正解ボタンのパルス */
+@keyframes correctPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.12); }
+  70%  { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* 不正解ボタンのシェイク */
+@keyframes wrongShake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-8px); }
+  40%       { transform: translateX(8px); }
+  60%       { transform: translateX(-5px); }
+  80%       { transform: translateX(5px); }
+}
+
+/* 音声ヒントアイコンのパルス */
+@keyframes pulseIcon {
+  0%, 100% { opacity: 1;    transform: scale(1); }
+  50%       { opacity: 0.65; transform: scale(1.08); }
+}
+
+/* 結果画面のフェードイン */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* 星ポップ */
+@keyframes starPop {
+  0%   { transform: scale(0.3); opacity: 0; }
+  60%  { transform: scale(1.2); opacity: 1; }
+  80%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   prefers-reduced-motion 対応（Requirements 10.5）
+   アニメーション・トランジションをすべて抑制する
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hiragana-card.is-active {
+    animation: none;
+  }
+
+  .question-hint {
+    animation: none;
+  }
+
+  .progress-bar__fill {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   レスポンシブ調整（Requirements 10.1）
+   ========================================================================== */
+
+/* タブレット以上（600px〜） */
+@media (min-width: 600px) {
+  .main-content {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .difficulty-buttons {
+    flex-direction: row;
+    max-width: 640px;
+    gap: 1rem;
+  }
+
+  .difficulty-btn {
+    flex: 1;
+  }
+
+  .choices-area {
+    gap: 1rem;
+  }
+}
+
+/* デスクトップ（900px〜） */
+@media (min-width: 900px) {
+  .main-content {
+    padding: 1.5rem 2rem;
+  }
+
+  .gojuon-table-container {
+    overflow-x: visible;
+  }
+}
+
+/* 超小画面（320px 以下でも壊れないように）（Requirements 10.1） */
+@media (max-width: 360px) {
+  .hiragana-card {
+    font-size: clamp(1.5rem, 8vw, 2rem);
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .choice-btn {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
+
+  .tab-btn {
+    padding: 0.6rem 0.25rem;
+    font-size: 0.85rem;
+    min-height: 44px;
+  }
+}

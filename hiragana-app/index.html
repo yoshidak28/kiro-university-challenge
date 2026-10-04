@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ひらがな れんしゅう — 五十音表とクイズで楽しくひらがなを学ぼう" />
+  <title>ひらがな れんしゅう</title>
+
+  <!-- Google Fonts: M PLUS Rounded 1c (丸みのある読みやすいフォント) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== アプリヘッダー ===== -->
+  <header class="app-header" role="banner">
+    <h1 class="app-title">ひらがな れんしゅう</h1>
+  </header>
+
+  <!-- ===== タブナビゲーション ===== -->
+  <!--
+    role="tablist" — タブ群のコンテナ (ARIA WAI-ARIA タブパターン)
+    各ボタンに role="tab"、対応パネルを aria-controls で関連付け
+    初期表示: 五十音表タブをアクティブ（aria-selected="true"）
+  -->
+  <nav class="tab-nav" aria-label="メインナビゲーション">
+    <div role="tablist" class="tab-list">
+      <button
+        role="tab"
+        id="tab-gojuon"
+        class="tab-btn tab-btn--active"
+        aria-selected="true"
+        aria-controls="gojuon-view"
+        tabindex="0"
+      >
+        <!-- アイコン (装飾的, aria-hidden) -->
+        <span aria-hidden="true" class="tab-icon">📖</span>
+        <span class="tab-label">五十音表</span>
+      </button>
+
+      <button
+        role="tab"
+        id="tab-quiz"
+        class="tab-btn"
+        aria-selected="false"
+        aria-controls="quiz-view"
+        tabindex="-1"
+      >
+        <span aria-hidden="true" class="tab-icon">🎮</span>
+        <span class="tab-label">クイズ</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== メインコンテンツ ===== -->
+  <main id="main-content" class="main-content">
+
+    <!-- ── 五十音表パネル ── -->
+    <!--
+      role="tabpanel" — タブパネル
+      aria-labelledby で対応タブボタンを参照
+      初期表示: visible
+    -->
+    <section
+      id="gojuon-view"
+      role="tabpanel"
+      aria-labelledby="tab-gojuon"
+      class="view view--active"
+      tabindex="0"
+    >
+      <!-- GojuonTableView.render() がここにテーブルを挿入する -->
+      <div id="gojuon-table" class="gojuon-table-container" aria-label="五十音表"></div>
+    </section>
+
+    <!-- ── クイズパネル ── -->
+    <!--
+      初期表示: hidden
+      クイズタブ選択時に表示され、まず difficulty-screen を表示する
+    -->
+    <section
+      id="quiz-view"
+      role="tabpanel"
+      aria-labelledby="tab-quiz"
+      class="view view--hidden"
+      tabindex="0"
+    >
+
+      <!-- 難易度選択画面 (Quiz_Session 開始前) -->
+      <div id="difficulty-screen" class="quiz-phase" aria-label="難易度選択">
+        <!-- QuizView.showDifficultyScreen() がここに難易度ボタンを挿入する -->
+      </div>
+
+      <!-- 出題エリア (Quiz_Session 進行中) -->
+      <div id="quiz-playing" class="quiz-phase quiz-phase--hidden" aria-label="クイズ">
+
+        <!-- 進捗バー -->
+        <div class="progress-container" aria-label="クイズ進捗">
+          <div
+            id="progress-bar"
+            role="progressbar"
+            class="progress-bar"
+            aria-valuenow="0"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-label="進捗"
+          >
+            <div id="progress-bar-fill" class="progress-bar__fill"></div>
+          </div>
+          <!-- 問題番号 & スコア表示 -->
+          <div class="progress-meta">
+            <span id="question-counter" class="progress-meta__counter" aria-live="polite">
+              <!-- "1 / 10" 形式で QuizView が更新 -->
+            </span>
+            <span id="score-display" class="progress-meta__score" aria-live="polite">
+              <!-- "⭐ 0 / 0" 形式で QuizView が更新 -->
+            </span>
+          </div>
+        </div>
+
+        <!-- 問題エリア -->
+        <div id="question-area" class="question-area" aria-live="polite" aria-atomic="true">
+          <!-- QuizView.renderQuestion() が動的に生成 -->
+        </div>
+
+        <!-- 選択肢ボタン群 -->
+        <div
+          id="choices-area"
+          class="choices-area"
+          role="group"
+          aria-label="選択肢"
+        >
+          <!-- QuizView.renderQuestion() が 4 つの Choice_Button を挿入 -->
+        </div>
+
+        <!-- フィードバックエリア -->
+        <div
+          id="feedback-area"
+          class="feedback-area"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <!-- QuizView.showFeedback() がメッセージを挿入 -->
+        </div>
+
+      </div><!-- /#quiz-playing -->
+
+      <!-- 結果画面 -->
+      <div id="quiz-result" class="quiz-phase quiz-phase--hidden" aria-label="クイズ結果">
+        <!-- QuizView.showResultScreen() が結果を挿入 -->
+      </div>
+
+    </section><!-- /#quiz-view -->
+
+  </main><!-- /#main-content -->
+
+  <!-- ===== フッター ===== -->
+  <footer class="app-footer" role="contentinfo">
+    <p class="app-footer__text">ひらがな れんしゅう &copy; 2025</p>
+  </footer>
+
+  <!-- ===== スクリプト読み込み (bodyの末尾) ===== -->
+  <!--
+    hiragana.js: HIRAGANA_DATA / SpeechSynthesizer / GojuonTableView
+    quiz.js:     QuizLogic / QuizView (hiragana.js のシンボルに依存するため後に読む)
+  -->
+  <script src="hiragana.js"></script>
+  <script src="quiz.js"></script>
+
+  <!-- ===== アプリ初期化・タブ切り替えロジック ===== -->
+  <script>
+    /**
+     * アプリケーション初期化スクリプト。
+     *
+     * - SpeechSynthesizer.init() を呼び出して音声機能を準備する
+     * - GojuonTableView.render() で五十音表を描画する
+     * - タブ切り替えロジックを登録する
+     *
+     * Requirements: 3.1, 3.2, 3.3, 3.4, 3.5
+     */
+    document.addEventListener('DOMContentLoaded', function () {
+
+      /* ── 1. SpeechSynthesizer 初期化 ── */
+      SpeechSynthesizer.init();
+
+      /* ── 2. 五十音表を描画 ── */
+      var gojuonContainer = document.getElementById('gojuon-table');
+      if (gojuonContainer && typeof GojuonTableView !== 'undefined') {
+        GojuonTableView.render(gojuonContainer);
+      }
+
+      /* ── 3. タブ切り替えロジック ── */
+
+      /** @type {HTMLButtonElement} */
+      var tabGojuon = document.getElementById('tab-gojuon');
+      /** @type {HTMLButtonElement} */
+      var tabQuiz   = document.getElementById('tab-quiz');
+      /** @type {HTMLElement} */
+      var viewGojuon = document.getElementById('gojuon-view');
+      /** @type {HTMLElement} */
+      var viewQuiz   = document.getElementById('quiz-view');
+
+      /**
+       * 指定したタブをアクティブにし、対応するビューを表示する。
+       * もう一方のタブを非アクティブにし、対応するビューを非表示にする。
+       *
+       * Requirements:
+       *   3.2 – タブクリックで現在のビューを非表示にし選択ビューを表示する
+       *   3.4 – アクティブタブを tab-btn--active クラスで視覚的に区別する
+       *   3.5 – aria-selected を排他的に設定する
+       *
+       * @param {'gojuon'|'quiz'} activeTab - アクティブにするタブ識別子
+       */
+      function switchTab(activeTab) {
+        if (activeTab === 'gojuon') {
+          // 五十音表タブをアクティブに設定 (Requirements 3.4, 3.5)
+          tabGojuon.setAttribute('aria-selected', 'true');
+          tabGojuon.classList.add('tab-btn--active');
+          tabGojuon.tabIndex = 0;
+
+          // クイズタブを非アクティブに設定 (Requirements 3.5)
+          tabQuiz.setAttribute('aria-selected', 'false');
+          tabQuiz.classList.remove('tab-btn--active');
+          tabQuiz.tabIndex = -1;
+
+          // ビュー切り替え (Requirements 3.2)
+          viewGojuon.classList.add('view--active');
+          viewGojuon.classList.remove('view--hidden');
+          viewQuiz.classList.remove('view--active');
+          viewQuiz.classList.add('view--hidden');
+
+        } else {
+          // クイズタブをアクティブに設定 (Requirements 3.4, 3.5)
+          tabQuiz.setAttribute('aria-selected', 'true');
+          tabQuiz.classList.add('tab-btn--active');
+          tabQuiz.tabIndex = 0;
+
+          // 五十音表タブを非アクティブに設定 (Requirements 3.5)
+          tabGojuon.setAttribute('aria-selected', 'false');
+          tabGojuon.classList.remove('tab-btn--active');
+          tabGojuon.tabIndex = -1;
+
+          // ビュー切り替え (Requirements 3.2)
+          viewQuiz.classList.add('view--active');
+          viewQuiz.classList.remove('view--hidden');
+          viewGojuon.classList.remove('view--active');
+          viewGojuon.classList.add('view--hidden');
+
+          // クイズタブ選択時は必ず Difficulty_Screen を先に表示 (Requirements 3.3)
+          if (typeof QuizView !== 'undefined') {
+            QuizView.showDifficultyScreen();
+          }
+        }
+      }
+
+      // 五十音表タブのクリックイベント
+      tabGojuon.addEventListener('click', function () {
+        switchTab('gojuon');
+      });
+
+      // クイズタブのクリックイベント
+      tabQuiz.addEventListener('click', function () {
+        switchTab('quiz');
+      });
+
+      // キーボードナビゲーション対応（WAI-ARIA タブパターン: 矢印キーでタブ間を移動）
+      [tabGojuon, tabQuiz].forEach(function (btn) {
+        btn.addEventListener('keydown', function (e) {
+          if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+            e.preventDefault();
+            // 現在アクティブでないタブにフォーカスを移動して選択
+            var target = (btn === tabGojuon) ? tabQuiz : tabGojuon;
+            target.focus();
+            target.click();
+          }
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>
