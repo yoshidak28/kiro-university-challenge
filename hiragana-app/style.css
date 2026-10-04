@@ -438,6 +438,23 @@ button:focus-visible {
   animation: pulseIcon 2s ease infinite;
 }
 
+/* カウントダウン中（3・2・1）の数字表示。大きく・目立つ色で表示する。 */
+.question-hint.is-counting {
+  font-size: clamp(3.5rem, 14vw, 6rem);
+  font-weight: 800;
+  color: var(--color-primary);
+  /* pulseIcon は上書きし、カウント専用のポップアニメーションを再生 */
+  animation: countPop 0.9s ease;
+}
+
+/* カウントダウン数字のポップアニメーション */
+@keyframes countPop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  40%  { transform: scale(1.25); opacity: 1; }
+  65%  { transform: scale(0.95); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
 /* ==========================================================================
    クイズ進行中 — 選択肢ボタン（2×2グリッド）
    ========================================================================== */

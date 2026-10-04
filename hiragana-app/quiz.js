@@ -476,10 +476,12 @@ const QuizView = {
     questionText.textContent = 'どの もじかな？';
     questionArea.appendChild(questionText);
 
+    // カウントダウン／音声ヒント表示用の要素
     var questionHint = document.createElement('p');
     questionHint.className = 'question-hint';
-    questionHint.setAttribute('aria-label', 'おとを きいてね');
-    questionHint.textContent = '🔊';
+    questionHint.setAttribute('aria-live', 'assertive');
+    questionHint.setAttribute('aria-label', 'よういはいいかな');
+    questionHint.textContent = 'よーい…';
     questionArea.appendChild(questionHint);
 
     // ── 4つの Choice_Button を生成（Requirements 5.2） ──
@@ -490,6 +492,9 @@ const QuizView = {
       btn.setAttribute('data-char', charValue);
       btn.setAttribute('aria-label', charValue);
       btn.textContent = charValue;
+
+      // カウントダウン中は無効化しておく（カウント後に有効化）
+      btn.disabled = true;
 
       // クリックハンドラ（連打防止を含む）（Requirements 9.1, 9.2）
       btn.addEventListener('click', function () {
@@ -505,10 +510,59 @@ const QuizView = {
       choicesArea.appendChild(btn);
     });
 
-    // ── 短いディレイ後に音声読み上げ（Requirements 5.6） ──
-    setTimeout(function () {
+    // ── 「3・2・1」のカウントダウン後に音声読み上げ（Requirements 5.6） ──
+    // 子どもがいつ音が出るか分かるよう、問題表示後にカウントダウンを行う。
+    // カウントダウンが終わるまでは選択肢を押せない（interactionLocked = true）。
+    AppState.quiz.interactionLocked = true;
+    QuizView.startCountdown(questionHint, function () {
+      // カウント終了: 選択肢を有効化し、正解文字を読み上げる
+      AppState.quiz.interactionLocked = false;
+      var buttons = choicesArea.querySelectorAll('.choice-btn');
+      buttons.forEach(function (b) { b.disabled = false; });
+
+      questionHint.textContent = '🔊';
+      questionHint.setAttribute('aria-label', 'おとを きいてね');
+
       SpeechSynthesizer.speak(question.correctChar);
-    }, 500);
+    });
+  },
+
+  /**
+   * 「3・2・1」のカウントダウンを表示・読み上げし、終了後に onDone を呼び出します。
+   *
+   * - 1秒ごとに 3 → 2 → 1 を表示し、各数字を音声で読み上げる
+   * - カウント終了後に onDone コールバックを実行する
+   *
+   * _Requirements: 5.6_
+   *
+   * @param {HTMLElement} displayEl - カウント数字を表示する要素
+   * @param {function(): void} onDone - カウント終了後に呼ばれるコールバック
+   * @returns {void}
+   */
+  startCountdown: function (displayEl, onDone) {
+    var counts = [3, 2, 1];
+    var i = 0;
+
+    function tick() {
+      if (i < counts.length) {
+        var n = counts[i];
+        displayEl.textContent = String(n);
+        displayEl.setAttribute('aria-label', String(n));
+        // カウント数字をアニメーション再トリガー
+        displayEl.classList.remove('is-counting');
+        // reflow を強制してアニメーションを確実に再生
+        void displayEl.offsetWidth;
+        displayEl.classList.add('is-counting');
+        SpeechSynthesizer.speak(String(n));
+        i++;
+        setTimeout(tick, 1000);
+      } else {
+        displayEl.classList.remove('is-counting');
+        onDone();
+      }
+    }
+
+    tick();
   },
 
   /**
@@ -569,7 +623,7 @@ const QuizView = {
       ];
       // ランダムに選ぶ（子ども向けに変化を持たせる）
       feedbackMessage = phrases[Math.floor(Math.random() * phrases.length)];
-      speechMessage   = 'おしい！ こたえは ' + result.correctChar + ' だよ！';
+      speechMessage   = 'おしい！ こたえわ ' + result.correctChar + ' だよ！';
     }
 
     feedbackArea.textContent = feedbackMessage;
