@@ -148,9 +148,85 @@ const SpeechSynthesizer = (() => {
   let _voiceRetries = 0;
 
   /**
-   * ブラウザのボイスリストから日本語ボイスを取得する。
+   * 自然に聞こえることが知られている日本語ボイス名（優先度順）。
+   *
+   * プラットフォーム別の代表的な高品質ボイス:
+   *   - Google 日本語          : Chrome（クラウド合成、自然）
+   *   - Kyoko / Otoya          : macOS / iOS の拡張（Enhanced/Premium）ボイス
+   *   - Microsoft Nanami/Ayumi : Windows の Neural 系ボイス
+   *   - O-ren                  : macOS の多言語ボイス
+   *
+   * 完全一致ではなく部分一致（includes）で判定するため、
+   * "Kyoko (Enhanced)" のような派生名も拾える。
+   *
+   * @type {string[]}
+   */
+  const _PREFERRED_VOICE_NAMES = [
+    'Google 日本語',
+    'Nanami',   // Microsoft Nanami (Neural)
+    'Ayumi',
+    'Kyoko',    // macOS / iOS（Enhanced があればそちらが優先される）
+    'Otoya',
+    'O-ren',
+    'Hattori',
+    'Sayaka',
+  ];
+
+  /**
+   * 日本語ボイス 1 件の「自然さ」スコアを算出する。
+   * スコアが高いほど優先的に選ばれる。
+   *
+   * 評価軸:
+   *   - 既知の高品質ボイス名に一致（優先度順に加点）
+   *   - 名前に Enhanced / Premium / Neural / Natural を含む（高品質版の目印）
+   *   - リモート（クラウド）合成は自然な傾向があるため加点（localService === false）
+   *   - ブラウザがそのロケールの既定とみなすボイス（default === true）
+   *
+   * @param {SpeechSynthesisVoice} voice
+   * @returns {number}
+   */
+  function _scoreVoice(voice) {
+    let score = 0;
+
+    // 既知の高品質ボイス名（リスト先頭ほど高得点）
+    const nameIdx = _PREFERRED_VOICE_NAMES.findIndex(
+      name => voice.name.includes(name)
+    );
+    if (nameIdx !== -1) {
+      score += 100 + (_PREFERRED_VOICE_NAMES.length - nameIdx) * 10;
+    }
+
+    // 高品質版を示すキーワード
+    if (/enhanced|premium|neural|natural/i.test(voice.name)) {
+      score += 40;
+    }
+
+    // リモート（クラウド）合成は一般に自然（MDN: localService）
+    if (voice.localService === false) {
+      score += 20;
+    }
+
+    // ロケール既定ボイス
+    if (voice.default) {
+      score += 5;
+    }
+
+    // ja-JP を ja（地域なし）よりわずかに優先
+    if (/^ja[-_]JP$/i.test(voice.lang)) {
+      score += 2;
+    }
+
+    return score;
+  }
+
+  /**
+   * ブラウザのボイスリストから、最も自然に聞こえそうな日本語ボイスを選ぶ。
    * Chrome 等では `voiceschanged` 発火前に `getVoices()` が空を返すため、
    * 最大 5 回・200ms 間隔でリトライする。
+   *
+   * lang が 'ja' で始まるボイスを候補とし（Requirements 2.4）、
+   * `_scoreVoice` のスコアが最大のものを採用する。
+   * 候補が無ければ null のまま（ブラウザデフォルトを使用）（Requirements 2.5）。
    *
    * @returns {void}
    */
@@ -165,9 +241,18 @@ const SpeechSynthesizer = (() => {
       return;
     }
 
-    // lang が 'ja' で始まるボイスを優先して選択（Requirements 2.4）
-    _jaVoice = voices.find(v => v.lang.startsWith('ja')) ?? null;
-    // 見つからない場合は null のまま（ブラウザデフォルトを使用）（Requirements 2.5）
+    // 日本語ボイスのみを候補にする（Requirements 2.4）
+    const jaVoices = voices.filter(v => v.lang && v.lang.startsWith('ja'));
+
+    if (jaVoices.length === 0) {
+      _jaVoice = null; // 日本語ボイス無し → ブラウザデフォルト（Requirements 2.5）
+      return;
+    }
+
+    // スコア最大のボイスを選択（同点時は getVoices() の並び順を維持）
+    _jaVoice = jaVoices.reduce((best, v) =>
+      _scoreVoice(v) > _scoreVoice(best) ? v : best
+    );
   }
 
   /**
@@ -195,11 +280,34 @@ const SpeechSynthesizer = (() => {
    * 指定テキストを日本語音声で読み上げる。
    * 進行中の発話がある場合は先にキャンセルする（Requirements 1.8）。
    *
+   * 発話の完了（または非対応・エラー）を知りたい場合は `onDone` を渡す。
+   * `onDone` は以下のいずれかのタイミングで **ちょうど1回** 呼ばれる:
+   *   - 発話が正常に終了したとき（utterance の `end` イベント）
+   *   - 発話中にエラーが発生したとき（`error` イベント）
+   *   - Web Speech API 非対応でサイレントフォールバックするとき（即時・非同期）
+   *
+   * これにより呼び出し側は「読み上げが終わってから次へ進む」制御ができ、
+   * クラウド系ボイスのように発話開始が遅延しても途中で打ち切られない。
+   *
    * @param {string} text - 読み上げるテキスト
+   * @param {function(): void} [onDone] - 発話完了・エラー・非対応時に1回だけ呼ばれる
    * @returns {void}
    */
-  function speak(text) {
-    if (!_synth) return; // 非対応ブラウザはサイレントフォールバック
+  function speak(text, onDone) {
+    // onDone を最大1回だけ呼ぶためのガード
+    let _finished = false;
+    const _done = () => {
+      if (_finished) return;
+      _finished = true;
+      if (typeof onDone === 'function') onDone();
+    };
+
+    if (!_synth) {
+      // 非対応ブラウザはサイレントフォールバック。
+      // 呼び出し側の遷移が止まらないよう onDone は非同期で必ず呼ぶ。
+      setTimeout(_done, 0);
+      return;
+    }
 
     // 進行中の発話をキャンセルしてから新しい発話を開始（Requirements 1.8）
     _synth.cancel();
@@ -221,6 +329,10 @@ const SpeechSynthesizer = (() => {
       utterance.voice = _jaVoice;
     }
 
+    // 発話完了・エラーで onDone を呼ぶ（どちらも遷移を進めてよい）
+    utterance.onend   = _done;
+    utterance.onerror = _done;
+
     _synth.speak(utterance);
   }
 
@@ -228,6 +340,8 @@ const SpeechSynthesizer = (() => {
   return {
     init,
     speak,
+    /** テスト・デバッグ用: ボイスの自然さスコアを算出する純粋関数 */
+    _scoreVoice,
     /** テスト・デバッグ用: 選択中の日本語ボイスを参照する */
     get _jaVoice() { return _jaVoice; },
     /** テスト・デバッグ用: SpeechSynthesis インスタンスを参照する */

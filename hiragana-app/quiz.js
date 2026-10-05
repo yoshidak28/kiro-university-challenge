@@ -628,15 +628,17 @@ const QuizView = {
 
     feedbackArea.textContent = feedbackMessage;
 
-    // 音声フィードバック（Requirements 6.6, 6.7）
-    SpeechSynthesizer.speak(speechMessage);
-
-    // ── 一定時間後に次問または結果画面へ遷移（Requirements 6.8） ──
+    // ── スコア・インデックスを先に確定（遷移内容は発話前に決める） ──
     var session = AppState.quiz.session;
     session.score += result.isCorrect ? 1 : 0;
     session.currentIndex++;
 
-    setTimeout(function () {
+    // 次画面へ遷移する処理（1回だけ実行する）
+    var advanced = false;
+    function advance() {
+      if (advanced) return;
+      advanced = true;
+
       if (session.currentIndex < session.selectedChars.length) {
         // 次の問題を生成してレンダリング
         var nextQuestion = QuizLogic.generateQuestion(
@@ -654,7 +656,36 @@ const QuizView = {
         // 全問終了 → 結果画面を表示
         QuizView.showResultScreen(session);
       }
-    }, 2000);
+    }
+
+    // ── フィードバックの読み上げ完了を待ってから遷移（Requirements 6.6, 6.7, 6.8） ──
+    // 固定ディレイだと、クラウド系ボイスの発話開始遅延により
+    // 読み上げ途中で次問カウントダウンの cancel() に打ち切られてしまう。
+    // そこで onDone（発話完了）で遷移しつつ、以下のガードを併用する:
+    //   - 最小表示時間 MIN_MS: 発話が極端に短くても、子どもがフィードバックを
+    //     認識できるよう最低限ここまでは次画面に進めない
+    //   - 最大待ち時間 MAX_MS: onend が発火しないブラウザでも固まらないフェイルセーフ
+    var MIN_MS = 1200;
+    var MAX_MS = 6000;
+
+    var speechDone  = false;
+    var minElapsed  = false;
+
+    // 最小表示時間が経過し、かつ発話が完了していたら遷移
+    function tryAdvance() {
+      if (minElapsed && speechDone) advance();
+    }
+
+    setTimeout(function () { minElapsed = true; tryAdvance(); }, MIN_MS);
+
+    // フェイルセーフ: 最大待ち時間を超えたら強制的に遷移
+    setTimeout(function () { advance(); }, MAX_MS);
+
+    // 音声フィードバック。完了（または非対応・エラー）で遷移を試みる。
+    SpeechSynthesizer.speak(speechMessage, function () {
+      speechDone = true;
+      tryAdvance();
+    });
   },
 
   /**
