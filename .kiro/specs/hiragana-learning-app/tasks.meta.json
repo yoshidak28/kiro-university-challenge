@@ -1,5 +1,14 @@
 {
-  "pbtResults": {},
+  "pbtResults": {
+    "6.3 Property 6 のプロパティテストを書く（出題文字に重複がない）": {
+      "status": "passed",
+      "lastRunTimestamp": 1791162624887
+    },
+    "6.9 Property 13 のプロパティテストを書く（スコア評価ティアの正確性）": {
+      "status": "passed",
+      "lastRunTimestamp": 1791162890874
+    }
+  },
   "executionHistory": {
     "1.1 `index.html` を作成し、DOM 構造・ARIA ロール・タブナビゲーション骨格を定義する": [
       {
@@ -423,6 +432,54 @@
         "executionId": "a86e0aac-0902-4cc6-9f21-363a269e9c0c",
         "chatSessionId": "sess_18710599-ceba-48da-8d2f-8fa4c8207add",
         "timestamp": 1791105557350
+      }
+    ],
+    "6.3 Property 6 のプロパティテストを書く（出題文字に重複がない）": [
+      {
+        "executionId": "ffd7c3b0-2c01-46c4-a87e-fe75febfef6d",
+        "chatSessionId": "sess_8aac4fc5-6406-4c51-bb8c-0011146f345c",
+        "timestamp": 1791162498248
+      },
+      {
+        "executionId": "ffd7c3b0-2c01-46c4-a87e-fe75febfef6d",
+        "chatSessionId": "sess_8aac4fc5-6406-4c51-bb8c-0011146f345c",
+        "timestamp": 1791162658956
+      }
+    ],
+    "6.5 Property 7 のプロパティテストを書く（Question の構造的正当性）": [
+      {
+        "executionId": "3616eca7-e31a-4cbe-ba14-65c6520f167f",
+        "chatSessionId": "sess_0879fb18-04c4-480b-a18d-4b476eec6359",
+        "timestamp": 1791162672673
+      },
+      {
+        "executionId": "3616eca7-e31a-4cbe-ba14-65c6520f167f",
+        "chatSessionId": "sess_0879fb18-04c4-480b-a18d-4b476eec6359",
+        "timestamp": 1791162795139
+      }
+    ],
+    "6.9 Property 13 のプロパティテストを書く（スコア評価ティアの正確性）": [
+      {
+        "executionId": "76fb00de-c5bd-48bc-b3c2-214020699849",
+        "chatSessionId": "sess_6b9c2061-2c05-4a35-ad66-8836504c2092",
+        "timestamp": 1791162829149
+      },
+      {
+        "executionId": "76fb00de-c5bd-48bc-b3c2-214020699849",
+        "chatSessionId": "sess_6b9c2061-2c05-4a35-ad66-8836504c2092",
+        "timestamp": 1791162903598
+      }
+    ],
+    "6.7 Property 8 のプロパティテストを書く（スコアが正解回数に対応する）": [
+      {
+        "executionId": "0c2ea0bf-46d3-4e4d-b4d0-3fd68eb69f88",
+        "chatSessionId": "sess_82795b60-83d3-4c53-866b-c6605f495883",
+        "timestamp": 1791162916774
+      },
+      {
+        "executionId": "0c2ea0bf-46d3-4e4d-b4d0-3fd68eb69f88",
+        "chatSessionId": "sess_82795b60-83d3-4c53-866b-c6605f495883",
+        "timestamp": 1791162984112
       }
     ]
   }

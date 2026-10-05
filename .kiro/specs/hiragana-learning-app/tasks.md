@@ -70,26 +70,26 @@
     - 文字プールから重複なしでランダムに `questionCount` 文字を選択
     - `QuizSession` オブジェクトを返す（`selectedChars`・`questions`・`currentIndex`・`score`）
     - _Requirements: 5.1_
-  - [ ]* 6.3 Property 6 のプロパティテストを書く（出題文字に重複がない）
+  - [x] 6.3 Property 6 のプロパティテストを書く（出題文字に重複がない）
     - **Property 6: クイズセッションで出題文字に重複がない**
     - **Validates: Requirements 5.1**
   - [x] 6.4 `QuizLogic.generateQuestion(correctChar, allChars, rng?)` を実装する
     - 正解＋3つの異なるディストラクターを選択し、ランダム順の `choices[4]` を生成
     - 最大試行回数（100回）超過時は例外をスロー
     - _Requirements: 5.2, 5.3, 5.4, 5.5_
-  - [ ]* 6.5 Property 7 のプロパティテストを書く（Question の構造的正当性）
+  - [x] 6.5 Property 7 のプロパティテストを書く（Question の構造的正当性）
     - **Property 7: 生成された問題が構造的に正当である**
     - **Validates: Requirements 5.2, 5.3, 5.4, 5.5**
   - [x] 6.6 `QuizLogic.evaluateAnswer(question, selectedChar)` を実装する
     - `AnswerResult`（`isCorrect`・`correctChar`・`selectedChar`）を返す
     - _Requirements: 5.8_
-  - [ ]* 6.7 Property 8 のプロパティテストを書く（スコアが正解回数に対応する）
+  - [x] 6.7 Property 8 のプロパティテストを書く（スコアが正解回数に対応する）
     - **Property 8: スコアが正解回数に正確に対応する**
     - **Validates: Requirements 5.8**
   - [x] 6.8 `QuizLogic.calcResultTier(correct, total)` を実装する
     - `100% → 'perfect'`、`70%以上 → 'good'`、`70%未満 → 'try-again'` を返す
     - _Requirements: 8.3, 8.4, 8.5_
-  - [ ]* 6.9 Property 13 のプロパティテストを書く（スコア評価ティアの正確性）
+  - [x] 6.9 Property 13 のプロパティテストを書く（スコア評価ティアの正確性）
     - **Property 13: スコア評価関数が正しいティアを返す**
     - **Validates: Requirements 8.3, 8.4, 8.5**
 
