@@ -1,0 +1,22 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "japanese-tts",
+  "version": "1.0.0",
+  "description": "ブラウザの Web Speech API で日本語を自然に読み上げるためのノウハウ集。自然な日本語ボイスの選び方、助詞「は／へ」の読み（わ／え）表記ルール、発話完了を待ってから次へ進む発話フロー制御をまとめたスキルを提供する。",
+  "author": {
+    "name": "kiro-university-challenge"
+  },
+  "keywords": [
+    "web speech api",
+    "speechSynthesis",
+    "SpeechSynthesisUtterance",
+    "text to speech",
+    "tts",
+    "音声合成",
+    "読み上げ",
+    "日本語",
+    "voice selection",
+    "ja-JP"
+  ],
+  "license": "MIT"
+}
